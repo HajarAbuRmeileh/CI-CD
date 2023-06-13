@@ -1,4 +1,3 @@
-import pytest
 from MyCode import add_numbers
 
 def test_add_positive():
