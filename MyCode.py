@@ -1,6 +1,4 @@
-
 import math
-
 c=int(input())
 d=int(input())
 def add_numbers(c,d):
