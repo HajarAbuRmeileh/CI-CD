@@ -1,6 +1,6 @@
 import math
-c=int(input())
-d=int(input())
+c=int(input("First number X:"))
+d=int(input("Second number Y:"))
 def add_numbers(c,d):
     return c+d
 

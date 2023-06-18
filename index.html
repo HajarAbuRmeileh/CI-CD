@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sum calculater!</title>
+    <title>calculater!</title>
    <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css" />
    <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script>
   </head>
@@ -17,11 +17,24 @@ d=int(input())
 def add_numbers(c,d):
     return c+d
 
+def abstract_numbers(c,d):
+    return c-d
+
+def mult_numbers(c,d):
+    return c*d
+
 def power_numbers(c,d):
     return math.pow(c,d)
+print("First number X : ",c)
+print("Second number Y: ",d)
+print("--------------------------------------------------------")
 sum=add_numbers(c,d)
 pow=power_numbers(c,d)
-print("x+y Result =",sum)
+abstract=abstract_numbers(c,d)
+mult=mult_numbers(c,d)
+print("X+Y Result =",sum)
+print("X-Y Result =",abstract)
+print("X*Y Result =",mult)
 print("X^Y Result =",pow)
   </py-script>
 
