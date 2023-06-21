@@ -1,12 +1,14 @@
-import math
-c=int(input("First number X:"))
-d=int(input("Second number Y:"))
-def add_numbers(c,d):
-    return c+d
+# calculator.py
 
-def power_numbers(c,d):
-    return math.pow(c,d)
-sum=add_numbers(c,d)
-pow=power_numbers(c,d)
-print("x+y Result =",sum)
-print("X^Y Result =",pow)
+def add_numbers(a, b):
+    return a + b
+
+def get_user_input():
+    a = float(input())
+    b = float(input())
+    return a, b
+
+if __name__ == "__main__":
+    num1, num2 = get_user_input()
+    result = add_numbers(num1, num2)
+    print("The sum of {} and {} is: {}".format(num1, num2, result))

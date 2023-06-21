@@ -1,11 +1,15 @@
-from MyCode import add_numbers
 
-def test_add_positive():
-    assert add_numbers(1,2)==3
+import MyCode
 
-def test_add_zero():
-    assert add_numbers(1,0)==1
 
-def test_add_negative():
-    assert add_numbers(5,-100)==-95
+def test_add_numbers():
+    assert MyCode.add_numbers(2, 3) == 5
+    assert MyCode.add_numbers(0, 0) == 0
+    assert MyCode.add_numbers(-5, 5) == 0
 
+def test_get_user_input(monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: '2')
+    assert MyCode.get_user_input() == (2.0, 2.0)
+
+    monkeypatch.setattr('builtins.input', lambda _: '-3')
+    assert MyCode.get_user_input() == (-3.0, -3.0)
