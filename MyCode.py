@@ -11,4 +11,4 @@ def get_user_input():
 if __name__ == "__main__":
     num1, num2 = get_user_input()
     result = add_numbers(num1, num2)
-    print("The sum of {} and {} is: {}".format(num1, num2, result))
+    print("The sum of {} and {} equal: {}".format(num1, num2, result))
