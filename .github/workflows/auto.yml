@@ -22,10 +22,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: |
-            docker.io/${{ github.repository }}
-            ghcr.io/${{ github.repository }}
-            quay.io/${{ github.repository }}
+          images: hajaraburmeileh/calculator
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
