@@ -17,5 +17,4 @@ if __name__ == "__main__":
     sub_result = sub_numbers(num1, num2)
     print("The sum of {} and {} equal: {}".format(num1, num2, add_result))
     print("The sub of {} and {} equal: {}".format(num1, num2, sub_result))
-    print("The sum of {} and {} equal: {}".format(num1, num2, add_result))
-    print("The sub of {} and {} equal: {}".format(num1, num2, sub_result))
+    Print("End")
