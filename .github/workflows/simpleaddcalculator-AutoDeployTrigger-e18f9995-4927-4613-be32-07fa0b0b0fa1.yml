@@ -1,0 +1,42 @@
+name: Trigger auto deployment for simpleaddcalculator
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/simpleaddcalculator-AutoDeployTrigger-e18f9995-4927-4613-be32-07fa0b0b0fa1.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.SIMPLEADDCALCULATOR_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.SIMPLEADDCALCULATOR_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.SIMPLEADDCALCULATOR_REGISTRY_PASSWORD }}
+          containerAppName: simpleaddcalculator
+          resourceGroup: demo
+          imageToBuild: hajaraburmeileh/simpleaddcalculator:${{ github.sha }}
+          
+
+     
+
