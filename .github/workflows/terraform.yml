@@ -1,0 +1,84 @@
+name: 'terraform-Azure'
+
+on:
+  push:
+    branches:
+      - main
+    
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: #this attribute will enable the manual run to the pipeline
+  
+
+# Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+defaults:
+  run:
+    shell: bash
+env: 
+  ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
+  ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+  ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+  STAGE_NAME: production
+
+jobs:
+  terraform_plan:
+    name: 'terraform plan'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  
+    - name: terraform init
+      run: terraform init
+      
+
+    - name: terraform Plan
+      run: terraform plan 
+      
+
+  terraform_apply:
+    name: 'terraform apply'
+    needs: [terraform_plan]
+    runs-on: ubuntu-latest
+    environment: production
+    
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+ 
+    - name: terraform Init
+      run: terraform init
+      
+
+    - name: terraform Init
+      run: echo 'var -> ${{inputs.tf_destroy}}'
+      
+
+      #github.ref == 'refs/heads/main' && github.event_name == 'push'
+    - name: terraform Apply
+      run: terraform apply -auto-approve -var image=hajaraburmeileh/ci-cd
+      if: ${{inputs.tf_destroy}} == false
+      
+
+    # - name: terraform destroy
+    #   run: terraform destroy -auto-approve
+    #   if: ${{inputs.tf_destroy}} == true
+    #   working-directory: ${{ env.ROOT_PATH }}

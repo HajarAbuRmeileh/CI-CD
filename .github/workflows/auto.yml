@@ -33,14 +33,7 @@ jobs:
         run: |
           pytest
   
-  # This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
 
-# GitHub recommends pinning actions to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
   push_to_registry:
     name: Push Docker image to Docker Hub
     needs: build_and_test
@@ -70,29 +63,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  build-and-deploy-azure:
-    needs: push_to_registry
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout to the branch
-        uses: actions/checkout@v2
-
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.SIMPLEADDCALCULATOR_AZURE_CREDENTIALS }}
-
-      - name: Build and push container image to registry
-        uses: azure/container-apps-deploy-action@v1
-        with:
-          appSourcePath: ${{ github.workspace }}
-          registryUrl: docker.io
-          registryUsername: ${{ secrets.SIMPLEADDCALCULATOR_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.SIMPLEADDCALCULATOR_REGISTRY_PASSWORD }}
-          containerAppName: simpleaddcalculator
-          resourceGroup: demo
-          imageToBuild: hajaraburmeileh/simpleaddcalculator:${{ github.sha }}
 
 
   
